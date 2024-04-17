@@ -109,6 +109,9 @@ function App() {
         console.log('Transaction failed with receipt:', error.receipt);
     }
     console.error('Transaction error:', error);
+    if (error.message.includes('revert')) {
+          console.log('INVALID USER')
+      }
     }
   }
   
