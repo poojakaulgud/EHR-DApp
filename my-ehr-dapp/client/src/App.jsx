@@ -15,6 +15,11 @@ function App() {
   const [val, setpidstate] = useState(0);
   const [uid, setuidstate] = useState(101);
   const [cid, setcidstate] = useState('abc');
+  const [companyDiv, setCompanyDiv] = useState(false);
+  const [patientDiv, setPatientDiv] = useState(false);
+
+  const [Precords, setPrecords] = useState(null);
+  const [Crecords, setCrecords] = useState(null);
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
   const [action, setAction] = useState(null);
@@ -69,6 +74,20 @@ function App() {
       let getAccount = await web3.eth.getAccounts();
       let patient_records = await contract.methods.getPatientRecords(_pid).call();
       console.log('pr',patient_records)
+      setPrecords(patient_records)
+      setPatientDiv(true);
+    } catch(error){
+      console.log('here',error);
+    }
+  }
+
+  async function getCompanyRecord(_cid){
+    try{
+      let getAccount = await web3.eth.getAccounts();
+      let company_records = await contract.methods.getCompanyRecords(_cid).call();
+      console.log('cr',company_records)
+      setCrecords(company_records)
+      setCompanyDiv(true);
     } catch(error){
       console.log('here',error);
     }
@@ -203,6 +222,29 @@ function App() {
           <h2>Display Patient Record</h2>
           <div>
           <button onClick={() => getPatientRecord(val)}>Get P Records for current pid</button>
+          {patientDiv && <p>
+            {Precords}
+          </p>}
+          </div>
+        </div>
+
+        <div>
+          <h2>Display Company Record</h2>
+          <div>
+          <button onClick={() => getCompanyRecord('abc')}>Get C Records for cid</button>
+          {companyDiv && <div>
+          {Crecords.map((item, index) => (
+            <div key={index}>
+              <p>Record {index + 1}</p>              
+              <li>Company:{item.CompanyId}</li>
+              <li>Patient: {item.PatientId}</li>
+              <li>User: {item.UserId}</li>
+              <li>Action: {item.action}</li>
+              <li>Timestamp: {item.timestamp}</li>
+            </div>
+            
+          ))}
+          </div>}
           </div>
         </div>
 
