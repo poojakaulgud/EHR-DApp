@@ -9,7 +9,7 @@ import {useState, useEffect} from "react";
 import moment from 'moment';
 
 
-const contractAddress = "0x06883Bde3EEAEA1D5C9650d89C82bd259CC91c01";
+// const contractAddress = "0x06883Bde3EEAEA1D5C9650d89C82bd259CC91c01";
 
 function App() {
   const [val, setpidstate] = useState(0);
@@ -20,16 +20,24 @@ function App() {
   const [action, setAction] = useState(null);
 
   useEffect(() => {
-    const initWeb3 = new Web3("http://localhost:7545");
-    const initContract = new initWeb3.eth.Contract(EhrAudit.abi, contractAddress);
-    setWeb3(initWeb3);
-    setContract(initContract);
+    setContractAddress();
   }, []);
 
   const radioHandleChange = (event) => {
     setAction(event.target.value);
   };
 
+  async function setContractAddress(){
+    const initWeb3 = new Web3("http://localhost:7545");
+    setWeb3(initWeb3);
+    const networkId = await initWeb3.eth.net.getId();
+    const contractAddress = EhrAudit.networks[networkId]?.address;
+    if (!contractAddress) {
+      throw new Error("Contract not deployed on the detected network.");
+   }
+    const initContract = new initWeb3.eth.Contract(EhrAudit.abi, contractAddress);    
+    setContract(initContract);
+  }
 
   async function getPid() {
     try {
@@ -56,16 +64,26 @@ function App() {
       }
       }
 
+  async function getPatientRecord(_pid){
+    try{
+      let getAccount = await web3.eth.getAccounts();
+      let patient_records = await contract.methods.getPatientRecords(_pid).call();
+      console.log('pr',patient_records)
+    } catch(error){
+      console.log('here',error);
+    }
+  }
+
   async function pushAuditRecord(){
     try{ 
       let getAccount = await web3.eth.getAccounts();
       let pid = await contract.methods.getPid().call();
       let timestamp = moment().format('DD-MM-YYYY HH:mm:ss'); 
-      console.log(typeof(cid), typeof(pid), typeof(uid), typeof(timestamp), typeof(action)); 
+      console.log(typeof(cid), typeof(Number(pid)), typeof(Number(uid)), typeof(timestamp), typeof(action)); 
       if (!cid || !pid || !uid || !timestamp || !action){
         throw new Error("Data unavailable");
       }      
-        const receipt =  await contract.methods.pushAuditEvent(cid, Number(pid), Number(uid), timestamp, action).send({from: getAccount[0]});
+        const receipt =  await contract.methods.pushAuditEvent(cid, Number(pid), Number(uid), timestamp, action).send({from: getAccount[0],  gas: 500000});
         console.log('Transaction successful:', receipt);
     } catch(error){
       if (error.receipt) {
@@ -179,6 +197,13 @@ function App() {
           onClick={pushAuditRecord}
           />
 
+        </div>
+
+        <div>
+          <h2>Display Patient Record</h2>
+          <div>
+          <button onClick={() => getPatientRecord(val)}>Get P Records for current pid</button>
+          </div>
         </div>
 
           <hr />

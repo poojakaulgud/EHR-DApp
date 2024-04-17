@@ -3,8 +3,8 @@ pragma solidity >=0.4.22 <0.9.0;
 
 library AssetLibrary{
   struct AuditEvent{
-    uint256 PatientId;
-    uint256 UserId;
+    uint16 PatientId;
+    uint16 UserId;
     // address UserAddress;
     string timestamp;
     string action;
@@ -14,15 +14,15 @@ library AssetLibrary{
 }
 contract EhrAudit {
   
-  mapping(uint256 => AssetLibrary.AuditEvent[]) public PatientRecords;
-  // mapping(uint256 => AssetLibrary.AuditEvent[]) public UserRecords;
+  mapping(uint16 => AssetLibrary.AuditEvent[]) public PatientRecords;
+  // mapping(uint16 => AssetLibrary.AuditEvent[]) public UserRecords;
   mapping(string => AssetLibrary.AuditEvent[]) public CompanyRecords;
-  uint256 Pid;
-  uint256[] patientList;
+  uint16 Pid;
+  uint16[] patientList;
   string[] companyList;
-  uint256[] userList;
+  uint16[] userList;
 
-  event AuditEventLogged(uint256 pid, uint uid, string timestamp, string action, string cid);
+  event AuditEventLogged(uint16 pid, uint uid, string timestamp, string action, string cid);
 
   // constructor() public{
   //   patientList = [1,2,3,4,5,6,7,8,9,10];
@@ -31,8 +31,8 @@ contract EhrAudit {
   // }
 
   function pushAuditEvent(string memory cid, 
-    uint256 pid, 
-    uint uid, 
+    uint16 pid, 
+    uint16 uid, 
     // address uaddress,
     string memory timestamp,
     string memory action
@@ -48,20 +48,28 @@ contract EhrAudit {
       emit AuditEventLogged(pid, uid, timestamp, action, cid);
     }
 
+    function getPatientRecords(uint16 pid) public view returns (AssetLibrary.AuditEvent[] memory) {
+        return PatientRecords[pid];
+    }
 
-  function getPid() public view returns (uint256) {
+    function getCompanyRecords(string memory cid) public view returns (AssetLibrary.AuditEvent[] memory) {
+        return CompanyRecords[cid];
+    }
+
+
+  function getPid() public view returns (uint16) {
     return Pid;
   }
 
-  function writePid(uint256 newId) public {
+  function writePid(uint16 newId) public {
     Pid = newId;
   }
 
-  // function getUid() public view returns (uint256) {
+  // function getUid() public view returns (uint16) {
   //   return PatientId;
   // }
 
-  // function writeUid(uint256 newId) public {
+  // function writeUid(uint16 newId) public {
   //   UserId = newId;
   // }
 }
