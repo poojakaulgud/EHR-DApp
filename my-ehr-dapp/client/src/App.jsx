@@ -48,6 +48,7 @@ function App() {
     try {
       const getPid = await contract.methods.getPid().call();
       console.log('getPid', getPid)
+      // comment here
       setpidstate(getPid);
       } catch (error) {
       console.log("Error:", error);
