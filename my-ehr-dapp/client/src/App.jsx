@@ -7,6 +7,18 @@ import Web3 from "web3"
 import EhrAudit from "./contracts/EhrAudit.json";
 import {useState, useEffect} from "react";
 import moment from 'moment';
+import PatientLogin from "./components/Patient/PatientLogin"
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CompanyLogin from "./components/Company/CompanyLogin";
+import PatientHomePage from "./components/Patient/PatientHomePage"
+import CompanyHomePage from "./components/Company/CompanyHomePage"
+
+
+
+
+
+
 
 
 // const contractAddress = "0x06883Bde3EEAEA1D5C9650d89C82bd259CC91c01";
@@ -120,147 +132,192 @@ function App() {
 
 
 
-  return (
-    <EthProvider>
-      <div id="App">
-        <div className="container">
-          <Intro />
-          <hr /> 
-           <Setup />
-          <hr />
-          {/* <Demo /> */}
+//   return (
+//     <EthProvider>
+//           <Intro />
+//           <Router>
+//           <div id="App">
+//           <div className="container">
+//             <Intro />
+//             <nav>
+//               <Link to="/">Home</Link> |{" "}
+//               <Link to="/patientLogin">Patient Login</Link> |{" "}
+//             </nav>
+//             <Routes>
+//               <Route path="/" element={<Setup />} />
+//               <Route path="/patientLogin" element={<PatientLogin />} />
+//             </Routes>
+//             <Footer />
+//           </div>
+//         </div>
 
-        <input
-          placeholder="Enter a pid"
-          onChange={ (e) => setpidstate(e.target.value) }
-          value={val}
-           />
-        <button onClick={getPid}>Get Pid</button>
-        <button onClick={() => setPid(val)}>Set Pid</button>
-        {/* <p>{val}</p> */}
-        <hr />
-        <hr />
-        <div> 
-          <h1>Audit Fields</h1>
-          <label>
-            Uid: 
-            <input type="text" 
-            placeholder="Enter Uid"
-            onChange={(e)=> setuidstate(e.target.value)}
-            value={uid}
-            />
-          </label>
-          <br />
+//         </Router>
+        //   <hr /> 
+        //    <Setup />
+        //   <hr />
+        //   {/* <Demo /> */}
 
-          <label>
-            Cid:            
-            <input type="text" 
-            placeholder="Enter Cid"
-            onChange={(e)=> setcidstate(e.target.value)}
-            value={cid}
-            /> 
-          </label><br />
+        // <input
+        //   placeholder="Enter a pid"
+        //   onChange={ (e) => setpidstate(e.target.value) }
+        //   value={val}
+        //    />
+        // <button onClick={getPid}>Get Pid</button>
+        // <button onClick={() => setPid(val)}>Set Pid</button>
+        // {/* <p>{val}</p> */}
+        // <hr />
+        // <hr />
+        // <div> 
+        //   <h1>Audit Fields</h1>
+        //   <label>
+        //     Uid: 
+        //     <input type="text" 
+        //     placeholder="Enter Uid"
+        //     onChange={(e)=> setuidstate(e.target.value)}
+        //     value={uid}
+        //     />
+        //   </label>
+        //   <br />
 
-          <label>
-            <input
-              type="radio"
-              value="create"
-              checked={action === 'create'}
-              onChange={radioHandleChange}
-            />
-            Create
-          </label> <br />
-          <label>
-            <input
-              type="radio"
-              value="delete"
-              checked={action === 'delete'}
-              onChange={radioHandleChange}
-            />
-            Delete
-          </label> <br />
-          <label>
-            <input
-              type="radio"
-              value="change"
-              checked={action === 'change'}
-              onChange={radioHandleChange}
-            />
-            Change
-          </label> <br />
-          <label>
-            <input
-              type="radio"
-              value="query"
-              checked={action === 'query'}
-              onChange={radioHandleChange}
-            />
-            Query
-          </label> <br />
-          <label>
-            <input
-              type="radio"
-              value="print"
-              checked={action === 'print'}
-              onChange={radioHandleChange}
-            />
-            Print
-          </label> <br />
-          <label>
-            <input
-              type="radio"
-              value="copy"
-              checked={action === 'copy'}
-              onChange={radioHandleChange}
-            />
-            Copy
-          </label> <br />
+        //   <label>
+        //     Cid:            
+        //     <input type="text" 
+        //     placeholder="Enter Cid"
+        //     onChange={(e)=> setcidstate(e.target.value)}
+        //     value={cid}
+        //     /> 
+        //   </label><br />
 
-          <input type="submit" value="Push Audit" 
-          onClick={pushAuditRecord}
-          />
+        //   <label>
+        //     <input
+        //       type="radio"
+        //       value="create"
+        //       checked={action === 'create'}
+        //       onChange={radioHandleChange}
+        //     />
+        //     Create
+        //   </label> <br />
+        //   <label>
+        //     <input
+        //       type="radio"
+        //       value="delete"
+        //       checked={action === 'delete'}
+        //       onChange={radioHandleChange}
+        //     />
+        //     Delete
+        //   </label> <br />
+        //   <label>
+        //     <input
+        //       type="radio"
+        //       value="change"
+        //       checked={action === 'change'}
+        //       onChange={radioHandleChange}
+        //     />
+        //     Change
+        //   </label> <br />
+        //   <label>
+        //     <input
+        //       type="radio"
+        //       value="query"
+        //       checked={action === 'query'}
+        //       onChange={radioHandleChange}
+        //     />
+        //     Query
+        //   </label> <br />
+        //   <label>
+        //     <input
+        //       type="radio"
+        //       value="print"
+        //       checked={action === 'print'}
+        //       onChange={radioHandleChange}
+        //     />
+        //     Print
+        //   </label> <br />
+        //   <label>
+        //     <input
+        //       type="radio"
+        //       value="copy"
+        //       checked={action === 'copy'}
+        //       onChange={radioHandleChange}
+        //     />
+        //     Copy
+        //   </label> <br />
 
-        </div>
+        //   <input type="submit" value="Push Audit" 
+        //   onClick={pushAuditRecord}
+        //   />
 
-        <div>
-          <h2>Display Patient Record</h2>
-          <div>
-          <button onClick={() => getPatientRecord(val)}>Get P Records for current pid</button>
-          {patientDiv && <p>
-            {Precords}
-          </p>}
-          </div>
-        </div>
+        // </div>
 
-        <div>
-          <h2>Display Company Record</h2>
-          <div>
-          <button onClick={() => getCompanyRecord('abc')}>Get C Records for cid</button>
-          {companyDiv && <div>
-          {Crecords.map((item, index) => (
-            <div key={index}>
-              <p>Record {index + 1}</p>              
-              <li>Company:{item.CompanyId}</li>
-              <li>Patient: {item.PatientId}</li>
-              <li>User: {item.UserId}</li>
-              <li>Action: {item.action}</li>
-              <li>Timestamp: {item.timestamp}</li>
-            </div>
+        // <div>
+        //   <h2>Display Patient Record</h2>
+        //   <div>
+        //   <button onClick={() => getPatientRecord(val)}>Get P Records for current pid</button>
+        //   {patientDiv && <p>
+        //     {Precords}
+        //   </p>}
+        //   </div>
+        // </div>
+
+        // <div>
+        //   <h2>Display Company Record</h2>
+        //   <div>
+        //   <button onClick={() => getCompanyRecord('abc')}>Get C Records for cid</button>
+        //   {companyDiv && <div>
+        //   {Crecords.map((item, index) => (
+        //     <div key={index}>
+        //       <p>Record {index + 1}</p>              
+        //       <li>Company:{item.CompanyId}</li>
+        //       <li>Patient: {item.PatientId}</li>
+        //       <li>User: {item.UserId}</li>
+        //       <li>Action: {item.action}</li>
+        //       <li>Timestamp: {item.timestamp}</li>
+        //     </div>
             
-          ))}
-          </div>}
-          </div>
-        </div>
+        //   ))}
+        //   </div>}
+        //   </div>
+        // </div>
 
-          <hr />
-          <Footer />
-        </div>
+        //   <hr />
+        //   <Footer />
 
         
 
-      </div>
-    </EthProvider>
-  );
+//     </EthProvider>
+//   );
+// }
+return (
+  <EthProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainContent />} />
+        <Route path="/PatientLogin" element={<PatientLogin />} />
+        <Route path="/PatientHomePage" element={<PatientHomePage />} />
+        <Route path="/CompanyLogin" element={<CompanyLogin />} />
+        <Route path="/CompanyHomePage" element={<CompanyHomePage />} />
+
+      </Routes>
+    </Router>
+    
+  </EthProvider>
+);
+}
+
+function MainContent() {
+return (
+  <>
+    <Intro />
+    <nav>
+      <Link to="/">Home</Link> |{" "}
+      <Link to="/patientLogin">Patient Login</Link> |{" "}
+      <Link to="/companyLogin">Company Login</Link>
+
+    </nav>
+    <Setup />
+    <Footer />
+  </>
+);
 }
 
 export default App;

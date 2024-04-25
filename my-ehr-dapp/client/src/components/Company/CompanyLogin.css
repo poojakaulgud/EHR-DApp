@@ -1,0 +1,22 @@
+/* .background {
+    height: 100vh;
+    background-color: #804000;
+} */
+
+.background {
+    height: 100vh;
+    background-color: #804000;
+    background-size: cover; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+
+.txt_color, .txt_color .form-text {
+    color: white;
+}
+
+.img_align {
+    text-align: center; 
+}
