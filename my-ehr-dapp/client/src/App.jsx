@@ -290,6 +290,7 @@ function App() {
 return (
   <EthProvider>
     <Router>
+      <div className="bc">
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/PatientLogin" element={<PatientLogin />} />
@@ -298,6 +299,7 @@ return (
         <Route path="/CompanyHomePage" element={<CompanyHomePage />} />
 
       </Routes>
+      </div>
     </Router>
     
   </EthProvider>
@@ -306,16 +308,28 @@ return (
 
 function MainContent() {
 return (
+
   <>
+    
+
+   
     <Intro />
-    <nav>
+    
+    {/* <nav>
       <Link to="/">Home</Link> |{" "}
       <Link to="/patientLogin">Patient Login</Link> |{" "}
       <Link to="/companyLogin">Company Login</Link>
 
+    </nav> */}
+    <nav className="nav nav-pills nav-justified navsize">
+      <Link to="/" className="nav-item nav-link active txt_color nav-link-large ">Home</Link>
+      <Link to="/patientLogin" className="nav-item nav-link txt_color nav-link-large ">Patient Login</Link>
+      <Link to="/companyLogin" className="nav-item nav-link txt_color nav-link-large ">Company Login</Link>
     </nav>
-    <Setup />
-    <Footer />
+    {/* <Setup />
+    <Footer /> */}
+    
+
   </>
 );
 }

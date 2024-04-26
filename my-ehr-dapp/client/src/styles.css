@@ -151,3 +151,24 @@ hr {
   display: inline-block;
   margin: 2rem 1rem 0 0;
 }
+
+
+.bc {
+  background-color: grey;
+  min-height: 100vh;
+  width: 100%;
+}
+.txt_color {
+  color: white;
+}
+
+.navsize {
+  padding: 20px 0; /*making the navbar taller*/
+}
+
+
+.nav-link-large {
+  padding: 12px 20px;
+
+  font-size: 1.5rem;
+}

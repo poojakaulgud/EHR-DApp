@@ -1,13 +1,15 @@
+import './Welcome.css';
+
 function Welcome() {
   return (
+    // <div className='bc'>
     <div className="welcome">
-      <h1>👋 Welcome to the Truffle + React Box!</h1>
+      <h1 className='txt_color'>👋 Welcome To Our CSCI 531 Semester Project!</h1>
       <p>
-        This is everything you need to start using Truffle to write,
-        compile, test, and deploy smart contracts, and interact with
-        them from a React app.
+        <img src = './blockchain.jpg' className="img_align"></img>
       </p>
     </div>
+    // </div>
   );
 }
 

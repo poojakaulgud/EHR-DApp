@@ -1,3 +1,5 @@
+import './Welcome.css';
+
 function Tree() {
   return (
     <code>
