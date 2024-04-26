@@ -1,7 +1,7 @@
-import { EthProvider } from "./contexts/EthContext";
+// import { EthProvider } from "./contexts/EthContext";
 import Intro from "./components/Intro/";
 import Setup from "./components/Setup";
-import Demo from "./components/Demo";
+// import Demo from "./components/Demo";
 import Footer from "./components/Footer";
 import Web3 from "web3"
 import EhrAudit from "./contracts/EhrAudit.json";
@@ -288,7 +288,7 @@ function App() {
 //   );
 // }
 return (
-  <EthProvider>
+  // <EthProvider>
     <Router>
       <div className="bc">
       <Routes>
@@ -302,7 +302,7 @@ return (
       </div>
     </Router>
     
-  </EthProvider>
+  // </EthProvider>
 );
 }
 
