@@ -289,9 +289,7 @@ return (
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/PatientLogin" element={<PatientLogin />} />
-        {/* <Route path="/PatientHomePage" element={<PatientHomePage />} /> */}
-        <Route path="/PatientHomePage" element={<PatientHomePage getPatientRecord={getPatientRecord} getPid={getPid} />} />
-
+        <Route path="/PatientHomePage" element={<PatientHomePage />} />
         <Route path="/CompanyLogin" element={<CompanyLogin />} />
         <Route path="/CompanyHomePage" element={<CompanyHomePage />} />
 

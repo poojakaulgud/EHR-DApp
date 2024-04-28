@@ -9,21 +9,10 @@ hr {
     background-color: white;
 }
 
-.dropdown {
+.design_b {
     display: flex;
     justify-content: center; 
     align-items: center; 
     min-height: 30vh;       
 
   }
-
-  .design_b {
-    display: flex;
-    justify-content: center; 
-    align-items: center; 
-    min-height: 30vh;       
-
-  }
-
-
-
