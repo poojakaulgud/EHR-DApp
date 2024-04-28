@@ -1,0 +1,28 @@
+.txt_color {
+    color: white;
+}
+
+hr {
+    border:2rem;
+    width: 100%;
+    height: 20px;
+    background-color: white;
+}
+
+.dropdown {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 30vh;       
+
+  }
+
+  .design_b {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    min-height: 30vh;       
+
+  }
+
+

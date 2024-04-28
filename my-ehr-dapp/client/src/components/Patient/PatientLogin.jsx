@@ -43,18 +43,25 @@ function PatientLogin() {
           navigate('/PatientHomePage');
         
       }
+      // else{
+      //   showAlertFunction(loginAction);
+      // }
       else{
-        showAlertFunction(loginAction);
+        alert(loginAction);
       }
 
     } catch(error){
-      console.log('here',error);
+      //console.log('here',error);
+      // console.log(`The following username: ${username} is incorrect or the associated password is wrong`);
+      // console.log('Error!', error);
+      //alert('Invalid password');
     }
   }
 
   function showAlertFunction(loginAction){
     // Call Alert component from here, use "loginAction" as alert component content.
     console.log(loginAction);
+    alert(loginAction);
   }
 
   async function setContractAddress(){

@@ -16,11 +16,6 @@ import CompanyHomePage from "./components/Company/CompanyHomePage"
 
 
 
-
-
-
-
-
 // const contractAddress = "0x06883Bde3EEAEA1D5C9650d89C82bd259CC91c01";
 
 function App() {
@@ -294,7 +289,9 @@ return (
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/PatientLogin" element={<PatientLogin />} />
-        <Route path="/PatientHomePage" element={<PatientHomePage />} />
+        {/* <Route path="/PatientHomePage" element={<PatientHomePage />} /> */}
+        <Route path="/PatientHomePage" element={<PatientHomePage getPatientRecord={getPatientRecord} getPid={getPid} />} />
+
         <Route path="/CompanyLogin" element={<CompanyLogin />} />
         <Route path="/CompanyHomePage" element={<CompanyHomePage />} />
 

@@ -8,6 +8,7 @@ import { Router, useNavigate } from 'react-router-dom';
 
 
 
+
 function CompanyLogin() {
   const [myLoginAction, setLoginAction] = useState(null);
   const [web3, setWeb3] = useState(null);
@@ -52,14 +53,18 @@ function CompanyLogin() {
         showAlertFunction(loginAction);
       }
 
-    } catch(error){
-      console.log('here',error);
+    } catch(e){
+      //console.log('here',error);
+      // console.log(`The following username: ${username} is incorrect or the associated password is wrong`);
+      // console.log('Error!', e);
+      //alert('Invalid password');
     }
   }
 
   function showAlertFunction(loginAction){
     // Call Alert component from here, use "loginAction" as alert component content.
     console.log(loginAction);
+    alert(loginAction);
   }
 
   async function setContractAddress(){
