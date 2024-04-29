@@ -5,6 +5,7 @@ import Web3 from "web3";
 import moment from 'moment';
 
 
+
 function CompanyHomePage() {
   const [cid, setCid] = useState('');
   const [uid, setUid] = useState(''); 
@@ -13,6 +14,8 @@ function CompanyHomePage() {
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
   const [action, setAction] = useState('');
+  const [message, setMessage] = useState(''); // Added to handle messages
+
 
   useEffect(() => {
     async function setContractAddress() {
@@ -46,15 +49,17 @@ function CompanyHomePage() {
         throw new Error("Data unavailable");
       }      
         const receipt =  await contract.methods.pushAuditEvent(cid, Number(pid), Number(uid), timestamp, action).send({from: getAccount[0],  gas: 500000});
-        console.log('Transaction successful:', receipt);
+        //console.log('Transaction successful:', receipt);
+        setMessage(`Transaction successful for the action: ${action}`);
     } catch(error){
-      if (error.receipt) {
-        console.log('Transaction failed with receipt:', error.receipt);
-    }
-    console.error('Transaction error:', error);
-    if (error.message.includes('revert')) {
-          console.log('INVALID USER')
-      }
+      //setMessage('Transaction error for the specified action! ' + error.message); // Set error message
+    //   if (error.receipt) {
+    //     console.log('Transaction failed with receipt:', error.receipt);
+    // }
+    // console.error('Transaction error:', error);
+    // if (error.message.includes('revert')) {
+    //       console.log('INVALID USER')
+    //   }
     }
   }
 
@@ -74,16 +79,22 @@ function CompanyHomePage() {
 
 
 
-    setAction(act);
-    setTimeout(async () => {
-    setLoading(true);
-    const success = await pushAuditRecord();
-    setLoading(false);
+    // setAction(act);
+  //   setTimeout(async () => {
+  //   setLoading(true);
+  //   // const success = await pushAuditRecord();
+  //   await pushAuditRecord();
+  //   setLoading(false);
 
-    if (success) {
-      alert(`Transaction successful for the action: ${act}`);
-    }
-  }, 0);
+  //   // if (success) {
+  //   //   alert(`Transaction successful for the action: ${act}`);
+  //   // }
+  // }, 0);
+    setAction(act);
+    setLoading(true);
+    await pushAuditRecord();
+    setLoading(false);
+  };
   
     // setLoading(true);
     // try {
@@ -98,7 +109,7 @@ function CompanyHomePage() {
     // } finally {
     //   setLoading(false);
     // }
-  };
+  //};
 
   const handleFetchRecords = async () => {
     if (!cid) {
@@ -147,16 +158,11 @@ function CompanyHomePage() {
       {act}
     </button> //changed the onClick to simplify and call execute directly
   ))}
-</div>
-      {/* {loading && <p>Loading records...</p>}
-      {records.length > 0 && (
-        <div className='design_b'>
-          <h3>Audit Records:</h3>
-          {records.map((record, index) => (
-            <p key={index}>{JSON.stringify(record)}</p>
-          ))}
-        </div>
-      )} */}
+ </div>
+      
+      <div className='design_b'>
+        {message && <p>{message}</p>} 
+      </div>
       <div className='design_b'>
   <h3>Audit Records:</h3>
   {records.map((record, index) => (
@@ -168,7 +174,7 @@ function CompanyHomePage() {
       <div>Timestamp: {record.timestamp}</div>
     </div>
   ))}
-</div>
+      </div>
     </div>
   );
 }
