@@ -16,3 +16,17 @@ hr {
     min-height: 30vh;       
 
   }
+
+  .btndesign {
+    margin: 20px; 
+  }
+
+  .btndesign1 {
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap;
+    align-items: center; 
+    min-height: 6vh;  
+    /* width: 100%;      */
+
+  }

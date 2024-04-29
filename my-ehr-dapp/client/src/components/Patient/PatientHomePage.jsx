@@ -94,7 +94,7 @@ function PatientHomePage() {
         <button type="button" class="btn btn-warning" onClick={handleFetchRecords} disabled={!pid}>Click to view Audit Records</button>
       </div>
 
-      {loading && <p>Loading records...</p>}
+      {/* {loading && <p>Loading records...</p>}
       {records.length > 0 && (
         <div className='design_b'>
           <h3>Audit Records:</h3>
@@ -102,7 +102,19 @@ function PatientHomePage() {
             <p key={index}>{JSON.stringify(record)}</p> 
           ))}
         </div>
-      )}
+      )} */}
+      <div className='design_b'>
+  <h3>Audit Records:</h3>
+  {records.map((record, index) => (
+    <div key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
+      <div>CompanyId: {record.CompanyId}</div>
+      <div>PatientId: {record.PatientId}</div>
+      <div>UserId: {record.UserId}</div>
+      <div>Action: {record.action}</div>
+      <div>Timestamp: {record.timestamp}</div>
+    </div>
+  ))}
+</div>
 
 
 

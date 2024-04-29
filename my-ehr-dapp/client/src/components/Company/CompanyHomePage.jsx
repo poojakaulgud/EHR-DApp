@@ -2,9 +2,12 @@ import './CompanyHomePage.css';
 import React, { useEffect, useState } from 'react';
 import EhrAudit from "../../contracts/EhrAudit.json";
 import Web3 from "web3";
+import moment from 'moment';
+
 
 function CompanyHomePage() {
   const [cid, setCid] = useState('');
+  const [uid, setUid] = useState(''); 
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [web3, setWeb3] = useState(null);
@@ -31,62 +34,71 @@ function CompanyHomePage() {
     setCid(e.target.value);
   };
 
+  async function pushAuditRecord(){
+    try{ 
+      let getAccount = await web3.eth.getAccounts();
+      // let pid = await contract.methods.getPid().call();
+      let pid = 1
+      let uid = 101
+      let timestamp = moment().format('DD-MM-YYYY HH:mm:ss'); 
+      console.log(typeof(cid), typeof(Number(pid)), typeof(Number(uid)), typeof(timestamp), typeof(action)); 
+      if (!cid || !pid || !uid || !timestamp || !action){
+        throw new Error("Data unavailable");
+      }      
+        const receipt =  await contract.methods.pushAuditEvent(cid, Number(pid), Number(uid), timestamp, action).send({from: getAccount[0],  gas: 500000});
+        console.log('Transaction successful:', receipt);
+    } catch(error){
+      if (error.receipt) {
+        console.log('Transaction failed with receipt:', error.receipt);
+    }
+    console.error('Transaction error:', error);
+    if (error.message.includes('revert')) {
+          console.log('INVALID USER')
+      }
+    }
+  }
 
-  const executeAction = async () => {
+  const executeAction = async (act) => {
     if (!cid) {
-      alert('Please enter a Company ID');
+      alert('Please enter Company ID');
       return;
     }
-  
+    // setLoading(true);
+    // setAction(act); 
+    // const success = await pushAuditRecord();
+    // setLoading(false);
+
+    // if (success) {
+    //   alert(`Transaction successful for action: ${action}`);
+    // }
+
+
+
+    setAction(act);
+    setTimeout(async () => {
     setLoading(true);
-    try {
-      let getAccount = await web3.eth.getAccounts();
-  
-      switch (action) {
-        case 'create':
-          //create
-          console.log(`Executing create for ${cid}`);
-          break;
-        case 'delete':
-          //delete
-          console.log(`Executing delete for ${cid}`);
-          break;
-        case 'change':
-          //change
-          console.log(`Executing change for ${cid}`);
-          break;
-        case 'query':
-          //querying
-          await handleFetchRecords();
-          break;
-        case 'print':
-          //print
-          console.log('Printing records:', records);
-          break;
-        case 'copy':
-          //copy
-          navigator.clipboard.writeText(JSON.stringify(records));
-          console.log('Records copied to clipboard');
-          break;
-        default:
-          console.log('Invalid action');
-          break;
-      }
-    } catch (error) {
-      console.error(`Error executing ${action}: `, error);
-    } finally {
-      setLoading(false);
+    const success = await pushAuditRecord();
+    setLoading(false);
+
+    if (success) {
+      alert(`Transaction successful for the action: ${act}`);
     }
+  }, 0);
+  
+    // setLoading(true);
+    // try {
+    //   // await pushAuditRecord();
+    //   // let getAccount = await web3.eth.getAccounts();
+    //   const success = await pushAuditRecord();
+    //   if (success) {
+    //     alert(`Transaction successful for action: ${action}`); 
+    // }
+    // } catch (error) {
+    //   console.error(`Error executing ${action}: `, error);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
-
-
-
-
-
-
-
-
-
 
   const handleFetchRecords = async () => {
     if (!cid) {
@@ -127,15 +139,16 @@ function CompanyHomePage() {
         <input type="text" placeholder="Enter Company ID" value={cid} onChange={handleCidInput} />
         <button type="button" class="btn btn-warning" onClick={handleFetchRecords} disabled={!cid}>Click to view Audit Records</button>
       </div>
-      <div className='btn-group' role='group' aria-label='Audit Actions'>
+      <div className='btn-group btndesign1' role='group' aria-label='Audit Actions'>
   {['create', 'delete', 'change', 'query', 'print', 'copy'].map((act) => (
-    <button key={act} type='button' className={`btn btn-secondary ${action === act ? 'active' : ''}`}
-            onClick={() => { setAction(act); executeAction(); }}>
+    <button key={act} type='button' className={`btn btn-secondary btndesign ${action === act ? 'active' : ''}`}
+            // onClick={() => { setAction(act); executeAction(); }}>
+            onClick = {() => executeAction(act)}> 
       {act}
-    </button>
+    </button> //changed the onClick to simplify and call execute directly
   ))}
 </div>
-      {loading && <p>Loading records...</p>}
+      {/* {loading && <p>Loading records...</p>}
       {records.length > 0 && (
         <div className='design_b'>
           <h3>Audit Records:</h3>
@@ -143,7 +156,19 @@ function CompanyHomePage() {
             <p key={index}>{JSON.stringify(record)}</p>
           ))}
         </div>
-      )}
+      )} */}
+      <div className='design_b'>
+  <h3>Audit Records:</h3>
+  {records.map((record, index) => (
+    <div key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
+      <div>CompanyId: {record.CompanyId}</div>
+      <div>PatientId: {record.PatientId}</div>
+      <div>UserId: {record.UserId}</div>
+      <div>Action: {record.action}</div>
+      <div>Timestamp: {record.timestamp}</div>
+    </div>
+  ))}
+</div>
     </div>
   );
 }
