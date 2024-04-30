@@ -106,7 +106,7 @@ function CompanyLogin() {
 </div>
   <div class="mb-3">
     <label htmlFor="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1"></input>
+    <input type="password" class="form-control" id="exampleInputPassword1" data-toggle="tooltip" data-placement="right" title="We have hashed our passwords with SHA256"></input>
     <div id="Help" class="form-text">We'll never share your passsword with anyone else.</div>
   </div>
   <div class="mb-3 form-check">

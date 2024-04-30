@@ -12,8 +12,7 @@ hr {
 .design_b {
     display: flex;
     justify-content: center; 
-    align-items: center; 
-    min-height: 30vh;       
+    align-items: center;   
 
   }
 

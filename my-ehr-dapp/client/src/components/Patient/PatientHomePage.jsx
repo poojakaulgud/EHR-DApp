@@ -12,6 +12,11 @@ function PatientHomePage() {
   const [loading, setLoading] = useState(false);
   const [web3, setWeb3] = useState(null);
   const [contract, setContract] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggle = (index) => {
+    setOpenIndex(prevIndex => prevIndex === index ? null : index);
+};
 
   useEffect(() => {
     async function setContractAddress() {
@@ -52,7 +57,7 @@ function PatientHomePage() {
           PatientId: index.PatientId,
           UserId: index.UserId,
           action: index.action,
-          timestamp: new Date(index.timestamp * 1000).toLocaleString()
+          timestamp: index.timestamp
         })));
         }
     } catch (error) {
@@ -66,6 +71,59 @@ function PatientHomePage() {
     <div className='txt_color'>
       <h1>Welcome to the Patient Dashboard!</h1>
       <hr></hr>
+       
+      <h3 class="text-center">View Audit Records:</h3>
+      {/* <div className='design_b'>
+        {records.map((record, index) => (
+          <div key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
+            <ul class="list-group">
+            <li class="list-group-item bg-light font-italic">Record {index}:{JSON.stringify(record)}</li>
+              <li class="list-group-item">CompanyId: {record.CompanyId}</li>
+              <li class="list-group-item">PatientId: {record.PatientId}</li>
+              <li class="list-group-item">UserId: {record.UserId}</li>
+              <li class="list-group-item">Action: {record.action}</li>
+              <li class="list-group-item">Timestamp: {record.timestamp}</li>
+            </ul>
+          </div>
+        ))}
+      </div> */}
+
+      <div class="justify-content-center">
+      {records.map((record, index) => (
+                <div key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
+                    <button
+                        className="btn btn-block btn-light text-left"
+                        type="button"
+                        onClick={() => toggle(index)}
+                        aria-expanded={openIndex === index}
+                        aria-controls={`collapse${index}`}
+                    >
+                        Record {index}: {JSON.stringify(record)}
+                    </button>
+                    <div
+                        className={`collapse ${openIndex === index ? 'show' : ''}`}
+                        id={`collapse${index}`}
+                    >
+                        <ul className="list-group">
+                            <li className="list-group-item">CompanyId: {record.CompanyId}</li>
+                            <li className="list-group-item">PatientId: {record.PatientId}</li>
+                            <li className="list-group-item">UserId: {record.UserId}</li>
+                            <li className="list-group-item">Action: {record.action}</li>
+                            <li className="list-group-item">Timestamp: {record.timestamp}</li>
+                        </ul>
+                    </div>
+                </div>
+            ))}
+        </div>
+
+      <div className='design_b'>
+
+        <input type="text" placeholder="Enter Patient ID" value={pid} onChange={handlePidInput} />
+      
+        <button type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Fetch records from blockchain" onClick={handleFetchRecords} disabled={!pid}>Click to view Audit Records</button>
+      </div>
+
+     
     
       <div class="card text-center">
         <div class="card-header">
@@ -84,39 +142,14 @@ function PatientHomePage() {
         <div class="card-body">
           <h5 class="card-title">NOTE</h5>
           <p class="card-text">In a real-world application all this data would be available using a database.</p>
-          <a href="#" class="btn btn-primary">Get Data</a>
+          <a href="#" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="This would be connected to the patient health record Database">Get Data</a>
         </div>
       </div>
-      <div className='design_b'>
+      <br/><br/><br/>
 
-        <input type="text" placeholder="Enter Patient ID" value={pid} onChange={handlePidInput} />
-      
-        <button type="button" class="btn btn-warning" onClick={handleFetchRecords} disabled={!pid}>Click to view Audit Records</button>
-      </div>
-
-      {/* {loading && <p>Loading records...</p>}
-      {records.length > 0 && (
-        <div className='design_b'>
-          <h3>Audit Records:</h3>
-          {records.map((record, index) => (
-            <p key={index}>{JSON.stringify(record)}</p> 
-          ))}
-        </div>
-      )} */}
-      <div className='design_b'>
-  <h3>Audit Records:</h3>
-  {records.map((record, index) => (
-    <div key={index} style={{ padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <div>CompanyId: {record.CompanyId}</div>
-      <div>PatientId: {record.PatientId}</div>
-      <div>UserId: {record.UserId}</div>
-      <div>Action: {record.action}</div>
-      <div>Timestamp: {record.timestamp}</div>
+      <div class="bg-light text-center fixed-bottom text-dark">
+        <p>@Copyright-CSCI531</p>
     </div>
-  ))}
-</div>
-
-
 
 
 
