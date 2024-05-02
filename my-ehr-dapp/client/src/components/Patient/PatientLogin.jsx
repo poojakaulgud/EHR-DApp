@@ -22,8 +22,8 @@ function PatientLogin() {
     const exampleInputPassword1 = document.getElementById('exampleInputPassword1');
     const username = document.getElementById('patientID').value;
     const p = exampleInputPassword1.value;
-    const hashedP = CryptoJS.SHA256(p).toString(); //hashing the password
-    console.log("Hashed password:", hashedP); //in the real world, we will send this field to our server
+    const hashedP = CryptoJS.SHA256(p).toString(); 
+    console.log("Hashed password:", hashedP); 
     exampleInputPassword1.value = '';
 
     checkCredentials(username,hashedP);

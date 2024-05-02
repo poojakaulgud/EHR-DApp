@@ -3,23 +3,24 @@ pragma solidity >=0.4.22 <0.9.0;
 
 
 library AssetLibrary{
-  struct AuditEvent{
+  
+
+  
+
+}
+contract EhrAudit {
+
+struct AuditEvent{
     uint16 PatientId;
     uint16 UserId;
-    // address UserAddress;
     string timestamp;
     string action;
     string CompanyId;
   }
 
   
-
-}
-contract EhrAudit {
-  
-  mapping(uint16 => AssetLibrary.AuditEvent[]) public PatientRecords;
-  // mapping(uint16 => AssetLibrary.AuditEvent[]) public UserRecords;
-  mapping(string => AssetLibrary.AuditEvent[]) public CompanyRecords;
+  mapping(uint16 => AuditEvent[]) public PatientRecords;
+  mapping(string => AuditEvent[]) public CompanyRecords;
   uint16 Pid;
   string[] companyList;
   string[] uPassList;
@@ -28,14 +29,14 @@ contract EhrAudit {
 
   struct User {
         uint16 uid;
-        string passwordHash;  // Storing password hash for security
+        string passwordHash;  
     }
     
     User[] public userList;
 
     struct Patient {
         uint16 pid;
-        string passwordHash;  // Storing password hash for security
+        string passwordHash;  
     }
     
     Patient[] public patientList;
@@ -128,22 +129,19 @@ contract EhrAudit {
   function pushAuditEvent(string memory cid, 
     uint16 pid, 
     uint16 uid, 
-    // address uaddress,
     string memory timestamp,
     string memory action
     ) public {
-      //  if(isUidValid(uid)){
         require(isUidValid(uid), "Invalid UID: Operation Reverted.");
 
-        PatientRecords[pid].push(AssetLibrary.AuditEvent(
+        PatientRecords[pid].push(AuditEvent(
           pid, uid, timestamp, action, cid
         ));
-        CompanyRecords[cid].push(AssetLibrary.AuditEvent(
+        CompanyRecords[cid].push(AuditEvent(
           pid, uid, timestamp, action, cid
         ));               
 
-        emit AuditEventLogged(pid, uid, timestamp, action, cid);        
-      //  }
+        emit AuditEventLogged(pid, uid, timestamp, action, cid); 
        
     }
 
@@ -156,11 +154,11 @@ contract EhrAudit {
         return false; 
     }
 
-    function getPatientRecords(uint16 pid) public view returns (AssetLibrary.AuditEvent[] memory) {
+    function getPatientRecords(uint16 pid) public view returns (AuditEvent[] memory) {
         return PatientRecords[pid];
     }
 
-    function getCompanyRecords(string memory cid) public view returns (AssetLibrary.AuditEvent[] memory) {
+    function getCompanyRecords(string memory cid) public view returns (AuditEvent[] memory) {
         return CompanyRecords[cid];
     }
 
@@ -205,12 +203,4 @@ contract EhrAudit {
             return "Invalid PatientID";
             }
 
-
-  // function getUid() public view returns (uint16) {
-  //   return PatientId;
-  // }
-
-  // function writeUid(uint16 newId) public {
-  //   UserId = newId;
-  // }
 }
